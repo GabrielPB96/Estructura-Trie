@@ -9,18 +9,28 @@ function getPokemon(id) {
   return fetch("https://pokeapi.co/api/v2/pokemon/" + id)
     .then((res) => res.json())
     .then((poke) => {
-      POKEMONS.push(poke.species.name);
+      let name = poke.species.name;
+      let img = poke.sprites.back_default;
+      POKEMONS.push({ name, img });
     });
 }
 function generarPokemons() {
   let ids = [];
-  for (let i = 1; i <= 200; i++) ids.push(i);
+  for (let i = 1; i <= 20; i++) ids.push(i);
   return Promise.all(ids.map((id) => getPokemon(id)));
 }
 
 function llenarDataBase() {
   for (let poke of POKEMONS) {
-    pokemons.insert(poke);
+    pokemons.insert(poke.name);
+  }
+}
+
+function getUrlPoke(name) {
+  for (let p of POKEMONS) {
+    if (p.name === name.toLowerCase()) {
+      return p.img;
+    }
   }
 }
 
@@ -29,10 +39,17 @@ function renderDataBase() {
   let $f = document.createDocumentFragment();
   let $ul = document.createElement("ol");
   for (let o of data) {
-    let $p = document.createElement("li");
-    $p.textContent = `${o.toString().replaceAll(",", "")}`;
-    $ul.append($p);
+    let nameR = o.toString().replaceAll(",", "");
+    let $li = document.createElement("li");
+    let $img = document.createElement("img");
+    let $paP = document.createElement("p");
+    $img.src = getUrlPoke(nameR);
+    $paP.textContent = `${nameR}`;
+    $li.append($paP);
+    $li.append($img);
+    $ul.append($li);
   }
+
   $f.append($ul);
   $op.append($f);
 }
@@ -44,9 +61,15 @@ function search() {
   if ($campo.value === "") return;
   let opc = pokemons.wordsPre($campo.value);
   for (let o of opc) {
-    let $pa = document.createElement("li");
-    $pa.textContent = `${o.toString().replaceAll(",", "")}`;
-    $ol.append($pa);
+    let nameR = o.toString().replaceAll(",", "");
+    let $li = document.createElement("li");
+    let $img = document.createElement("img");
+    let $paP = document.createElement("p");
+    $img.setAttribute("src", getUrlPoke(nameR));
+    $paP.textContent = `${nameR}`;
+    $li.append($paP);
+    $li.append($img);
+    $ol.append($li);
   }
   $frag.append($ol);
   $op.append($frag);
