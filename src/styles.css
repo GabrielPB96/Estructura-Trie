@@ -1,0 +1,29 @@
+body {
+  font-family: sans-serif;
+}
+
+.app {
+  width: 100%;
+}
+
+.container-form {
+  width: 400px;
+  margin: auto;
+}
+
+form {
+  width: 100%;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+}
+
+.op {
+  width: 400px;
+  height: 200px;
+  border: 2px solid black;
+  border-radius: 20px;
+  padding: 10px;
+  overflow-y: auto;
+  margin-top: 10px;
+}
