@@ -16,7 +16,7 @@ function getPokemon(id) {
 }
 function generarPokemons() {
   let ids = [];
-  for (let i = 1; i <= 20; i++) ids.push(i);
+  for (let i = 1; i <= 100; i++) ids.push(i);
   return Promise.all(ids.map((id) => getPokemon(id)));
 }
 
