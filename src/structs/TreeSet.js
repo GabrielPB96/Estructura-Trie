@@ -51,6 +51,12 @@ export class TreeSet {
     this.tam++;
   }
 
+  forEach(callback) {
+    for (let e of this.elements) {
+      callback(e);
+    }
+  }
+
   binarySearch(value) {
     let a = 0,
       b = this.size - 1,
