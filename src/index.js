@@ -16,7 +16,7 @@ function getPokemon(id) {
 }
 function generarPokemons() {
   let ids = [];
-  for (let i = 1; i <= 100; i++) ids.push(i);
+  for (let i = 1; i <= 200; i++) ids.push(i);
   return Promise.all(ids.map((id) => getPokemon(id)));
 }
 
@@ -58,7 +58,10 @@ function search() {
   $op.innerHTML = "";
   let $frag = document.createDocumentFragment();
   let $ol = document.createElement("ol");
-  if ($campo.value === "") return;
+  if ($campo.value === "") {
+    renderDataBase();
+    return;
+  }
   let opc = pokemons.wordsPre($campo.value);
   for (let o of opc) {
     let nameR = o.toString().replaceAll(",", "");

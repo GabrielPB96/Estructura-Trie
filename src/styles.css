@@ -1,5 +1,6 @@
 body {
   font-family: sans-serif;
+  background-color: #2c2c2e;
 }
 
 .app {
@@ -16,16 +17,31 @@ form {
   margin: auto;
   display: flex;
   justify-content: center;
+  gap: 20px;
 }
 
 .op {
   width: 400px;
-  height: 200px;
+  height: 400px;
   border: 2px solid black;
-  border-radius: 20px;
+  border-radius: 20px 10px 10px 20px;
   padding: 10px;
   overflow-y: auto;
   margin-top: 10px;
+  position: relative;
+  /*background-color: #426e93;*/
+  background-color: #ff6600;
+}
+
+.op::-webkit-scrollbar {
+  width: 10px;
+  background-color: silver;
+  border-radius: 10px;
+  position: relative;
+}
+.op::-webkit-scrollbar-thumb {
+  background-color: #2c2c2e;
+  border-radius: 5px;
 }
 
 img {
@@ -46,7 +62,26 @@ li {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  background-color: #2c2c2c;
-  color: white;
+  background-color: #2c2c2e;
+  color: #ffffff;
   border-radius: 10px;
+}
+
+input[type="text"] {
+  outline: none;
+  padding: 5px;
+  border-radius: 5px;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 17px;
+}
+
+input[type="button"] {
+  background-color: royalblue;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  color: #ffffff;
+  font-size: 17px;
+  cursor: pointer;
 }
