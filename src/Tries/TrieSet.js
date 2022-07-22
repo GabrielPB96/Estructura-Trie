@@ -1,6 +1,6 @@
-import { TreeSet } from "./TreeSet.js";
+import { TreeSet } from "../structs/TreeSet.js";
 
-export class Trie2 {
+export class TrieSet {
   constructor(value = "", fin = false) {
     this.value = value;
     this.fin = fin;
@@ -16,11 +16,11 @@ export class Trie2 {
     let newNode,
       act = this;
     for (let e of word) {
-      newNode = new Trie2(e, false);
-      if(!act.hijos.has(newNode)) {
+      newNode = new TrieSet(e, false);
+      if (!act.hijos.has(newNode)) {
         act.hijos.add(newNode);
         act = newNode;
-      }else act = act.hijos.getE(newNode);
+      } else act = act.hijos.getE(newNode);
     }
     newNode.fin = true;
   }

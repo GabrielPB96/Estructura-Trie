@@ -1,4 +1,4 @@
-import { ascii } from "./funciones.js";
+import { ascii } from "../funciones.js";
 
 /**
  * comparator(a, b), retorna 1 si "a" es menor a "b", 0 en otros casos

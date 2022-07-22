@@ -1,5 +1,5 @@
-import { SortedMap } from "./SortedMap.js";
-import { ascii } from "./funciones.js";
+import { SortedMap } from "../structs/SortedMap.js";
+import { ascii } from "../funciones.js";
 
 export class TrieMap {
   constructor(fin = false) {
