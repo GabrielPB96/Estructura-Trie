@@ -13,6 +13,7 @@ export class TrieSet {
   }
 
   insert(word) {
+    this.valid(word);
     word = word.toUpperCase();
     let newNode,
       act = this;
@@ -24,6 +25,20 @@ export class TrieSet {
       } else act = act.hijos.getE(newNode);
     }
     newNode.fin = true;
+  }
+
+  contains(word) {
+    this.valid(word);
+    word = word.toUpperCase();
+    if (word.length === 0) return this.fin;
+    let node = this.hijos.getE(new TrieSet(word[0]));
+    if (node) {
+      return node.contains(word.slice(1, word.length));
+    } else return false;
+  }
+
+  valid(word) {
+    if (typeof word !== "string") throw Error(`${word} is not of type string`);
   }
 
   words(current = [], res = []) {
