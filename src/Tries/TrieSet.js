@@ -14,31 +14,46 @@ export class TrieSet {
 
   insert(word) {
     this.valid(word);
-    word = word.toUpperCase();
-    let newNode,
-      act = this;
-    for (let e of word) {
-      newNode = new TrieSet(e, false);
-      if (!act.hijos.has(newNode)) {
-        act.hijos.add(newNode);
-        act = newNode;
-      } else act = act.hijos.getE(newNode);
+    let newNode, node;
+    if (word.length === 0) {
+      this.fin = true;
+    } else {
+      newNode = new TrieSet(word[0].toUpperCase());
+      if (!this.hijos.has(newNode)) {
+        this.hijos.add(newNode);
+      }
+      node = this.hijos.getE(newNode);
+      node.insert(word.slice(1, word.length));
     }
-    newNode.fin = true;
   }
 
   contains(word) {
     this.valid(word);
-    word = word.toUpperCase();
     if (word.length === 0) return this.fin;
-    let node = this.hijos.getE(new TrieSet(word[0]));
+    let node = this.hijos.getE(new TrieSet(word[0].toUpperCase()));
     if (node) {
       return node.contains(word.slice(1, word.length));
     } else return false;
   }
 
-  valid(word) {
-    if (typeof word !== "string") throw Error(`${word} is not of type string`);
+  isPreFix(prefix, word) {
+    this.valid(prefix, word);
+    if (prefix.length === 0) {
+      return this.contains(word);
+    } else {
+      let node = this.hijos.getE(new TrieSet(prefix[0].toUpperCase()));
+      if (node) {
+        prefix = prefix.slice(1, prefix.length);
+        word = word.slice(1, word.length);
+        return node.isPreFix(prefix, word);
+      } else return false;
+    }
+  }
+
+  valid(...word) {
+    for (let w of word) {
+      if (typeof w !== "string") throw Error(`${w} is not of type string`);
+    }
   }
 
   words(current = [], res = []) {
