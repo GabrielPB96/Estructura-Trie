@@ -1,5 +1,7 @@
 import "./styles.css";
 import { TrieMap } from "./TrieMap.js";
+import { TreeSet } from "./TreeSet.js";
+import { Trie2 } from "./Trie2";
 
 const pokemons = new TrieMap();
 
@@ -91,3 +93,8 @@ function init() {
 }
 
 window.addEventListener("load", init());
+
+const tS = new Trie2();
+tS.insert("hola");
+tS.insert("holanda");
+console.log(tS);
