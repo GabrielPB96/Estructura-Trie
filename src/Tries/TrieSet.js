@@ -1,15 +1,14 @@
 import { TreeSet } from "../structs/TreeSet.js";
 import { ascii } from "../funciones.js";
 
+const comparator = (a, b) => (ascii(a.value) - ascii(b.value) < 0 ? 1 : 0);
+const equals = (a, b) => ascii(a.value) === ascii(b.value);
+
 export class TrieSet {
   constructor(value = "", fin = false) {
     this.value = value;
     this.fin = fin;
-    this.hijos = new TreeSet(
-      (a, b) => (ascii(a.value) - ascii(b.value) < 0 ? 1 : 0),
-      (a, b) => ascii(a.value) === ascii(b.value),
-      true
-    );
+    this.hijos = new TreeSet(comparator, equals, true);
   }
 
   insert(word) {
@@ -24,6 +23,28 @@ export class TrieSet {
       }
       node = this.hijos.getE(newNode);
       node.insert(word.slice(1, word.length));
+    }
+  }
+
+  delete(word) {
+    this.valid(word);
+    //if (!this.contains(word)) return;
+    word = word.toUpperCase();
+    let nodeD = this,
+      nodeA = this;
+    for (let w of word) {
+      let node = nodeA.hijos.getE(new TrieSet(w));
+      if (node) {
+        nodeA = node;
+        if (!node.hijos.isEmpty) {
+          nodeD = node;
+        }
+      } else return;
+    }
+    if (nodeA.hijos.isEmpty) {
+      nodeD.hijos = new TreeSet(comparator, equals, true);
+    } else {
+      nodeA.fin = false;
     }
   }
 
@@ -67,5 +88,29 @@ export class TrieSet {
     });
     current.pop();
     return res;
+  }
+
+  get isEmpty() {
+    return this.value === "";
+  }
+
+  bfs() {
+    let report = [];
+    let queue = [];
+    let vis = new TreeSet(
+      (a, b) => (ascii(a.value) - ascii(b.value) < 0 ? 1 : 0),
+      (a, b) => ascii(a.value) === ascii(b.value)
+    );
+    queue.push(this);
+    while (queue.length > 0) {
+      let act = queue.shift();
+      report.push(act.value);
+      act.hijos.forEach((e) => {
+        if (!vis.has(e)) {
+          queue.push(e);
+        }
+      });
+    }
+    return report;
   }
 }
