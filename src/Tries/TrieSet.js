@@ -8,7 +8,13 @@ export class TrieSet {
   constructor(value = "", fin = false) {
     this.value = value;
     this.fin = fin;
+    this.nodes = 0;
     this.hijos = new TreeSet(comparator, equals, true);
+  }
+
+  get cantNodes() {
+    this.bfs();
+    return this.nodes;
   }
 
   insert(word) {
@@ -31,18 +37,21 @@ export class TrieSet {
     //if (!this.contains(word)) return;
     word = word.toUpperCase();
     let nodeD = this,
+      nodeE,
       nodeA = this;
-    for (let w of word) {
+    for (let i = 0; i < word.length; i++) {
+      let w = word[i];
       let node = nodeA.hijos.getE(new TrieSet(w));
       if (node) {
         nodeA = node;
-        if (!node.hijos.isEmpty) {
+        if (node.hijos.size > 1) {
           nodeD = node;
+          nodeE = nodeD.hijos.getE(new TrieSet(word[i + 1]));
         }
       } else return;
     }
     if (nodeA.hijos.isEmpty) {
-      nodeD.hijos = new TreeSet(comparator, equals, true);
+      nodeD.hijos.delete(nodeE);
     } else {
       nodeA.fin = false;
     }
@@ -102,12 +111,14 @@ export class TrieSet {
       (a, b) => ascii(a.value) === ascii(b.value)
     );
     queue.push(this);
+    this.nodes = 0;
     while (queue.length > 0) {
       let act = queue.shift();
       report.push(act.value);
       act.hijos.forEach((e) => {
         if (!vis.has(e)) {
           queue.push(e);
+          this.nodes++;
         }
       });
     }

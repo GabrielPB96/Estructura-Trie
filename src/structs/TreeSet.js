@@ -14,6 +14,10 @@ export class TreeSet {
     return this.tam;
   }
 
+  get isEmpty() {
+    return this.size === 0;
+  }
+
   get(pos) {
     return this.elements[pos];
   }
@@ -31,6 +35,15 @@ export class TreeSet {
   has(value) {
     let pos = this.binarySearch(value);
     return this.elements[pos] && this.equals(this.elements[pos], value);
+  }
+
+  delete(value) {
+    if (!this.has(value)) return null;
+    let pos = this.binarySearch(value);
+    let left = this.elements.slice(0, pos);
+    let right = this.elements.slice(pos + 1, this.size);
+    this.elements = left.concat(right);
+    this.tam--;
   }
 
   add(value) {
