@@ -70,6 +70,16 @@ export class TreeSet {
     }
   }
 
+  *[Symbol.iterator]() {
+    let i = 0;
+    let value;
+    while (i < this.size) {
+      value = this.elements[i];
+      yield value;
+      i++;
+    }
+  }
+
   binarySearch(value) {
     let a = 0,
       b = this.size - 1,
