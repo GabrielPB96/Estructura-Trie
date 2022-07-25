@@ -4,7 +4,8 @@ import { TreeSet } from "./structs/TreeSet.js";
 import { TrieSet } from "./Tries/TrieSet.js";
 import { ascii } from "./funciones.js";
 
-const pokemons = new TrieMap();
+//const pokemons = new TrieMap();
+const pokemons = new TrieSet();
 
 let $campo, $op, $search;
 let POKEMONS = [];
@@ -38,7 +39,8 @@ function getUrlPoke(name) {
 }
 
 function renderDataBase() {
-  let data = pokemons.toString();
+  //let data = pokemons.toString();
+  let data = pokemons.words();
   let $f = document.createDocumentFragment();
   let $ul = document.createElement("ol");
   for (let o of data) {
@@ -65,7 +67,9 @@ function search() {
     renderDataBase();
     return;
   }
-  let opc = pokemons.wordsPre($campo.value);
+  //let opc = pokemons.wordsPre($campo.value);
+  let v = $campo.value;
+  let opc = pokemons.wordsPreFix(v);
   for (let o of opc) {
     let nameR = o.toString().replaceAll(",", "");
     let $li = document.createElement("li");

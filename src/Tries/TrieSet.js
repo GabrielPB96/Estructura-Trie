@@ -86,20 +86,29 @@ export class TrieSet {
     }
   }
 
-  words(current = [], res = [], valid) {
+  words(current = [], res = []) {
     this.hijos.forEach((e) => {
       current.push(e.value);
       if (e.fin) {
         let word = current.toString().replaceAll(",", "");
-        if (!valid) res.push(word);
-        else {
-          if (valid(word)) res.push(word);
-        }
+        res.push(word);
       }
       e.words(current, res);
     });
     current.pop();
     return res;
+  }
+
+  wordsPreFix(prefix) {
+    let node = this;
+    for (let c of prefix) {
+      let nodeC = node.hijos.getE(new TrieSet(c.toUpperCase()));
+      if (nodeC) {
+        node = nodeC;
+      } else return;
+    }
+    prefix = prefix.toUpperCase();
+    return node.words(Array.from(prefix));
   }
 
   get isEmpty() {
