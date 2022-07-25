@@ -86,12 +86,15 @@ export class TrieSet {
     }
   }
 
-  words(current = [], res = []) {
+  words(current = [], res = [], valid) {
     this.hijos.forEach((e) => {
       current.push(e.value);
       if (e.fin) {
         let word = current.toString().replaceAll(",", "");
-        res.push(word);
+        if (!valid) res.push(word);
+        else {
+          if (valid(word)) res.push(word);
+        }
       }
       e.words(current, res);
     });
