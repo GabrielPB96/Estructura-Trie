@@ -105,7 +105,7 @@ export class TrieSet {
       let nodeC = node.hijos.getE(new TrieSet(c.toUpperCase()));
       if (nodeC) {
         node = nodeC;
-      } else return;
+      } else return [];
     }
     prefix = prefix.toUpperCase();
     return node.words(Array.from(prefix));

@@ -20,7 +20,7 @@ function getPokemon(id) {
 }
 function generarPokemons() {
   let ids = [];
-  for (let i = 1; i <= 200; i++) ids.push(i);
+  for (let i = 1; i <= 210; i++) ids.push(i);
   return Promise.all(ids.map((id) => getPokemon(id)));
 }
 
@@ -59,7 +59,8 @@ function renderDataBase() {
   $op.append($f);
 }
 
-function search() {
+function search(event) {
+  event.preventDefault();
   $op.innerHTML = "";
   let $frag = document.createDocumentFragment();
   let $ol = document.createElement("ol");
@@ -70,6 +71,9 @@ function search() {
   //let opc = pokemons.wordsPre($campo.value);
   let v = $campo.value;
   let opc = pokemons.wordsPreFix(v);
+  if (opc.length === 0) {
+    $ol.textContent = "NOT FOUND";
+  }
   for (let o of opc) {
     let nameR = o.toString().replaceAll(",", "");
     let $li = document.createElement("li");
